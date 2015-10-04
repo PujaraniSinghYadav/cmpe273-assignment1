@@ -77,7 +77,7 @@ type DBRecord struct {
 	unvestedAmount float64
 }
 
-func (t *VirtualTradingPlatform) GetDBRecord(tradeid int) (error, DBRecord) {
+func GetDBRecord(t *VirtualTradingPlatform, tradeid int) (error, DBRecord) {
 	for it := t.db.Front(); it != nil; it = it.Next() {
 		record := it.Value.(DBRecord)
 		if record.tradeid == tradeid {
@@ -246,7 +246,7 @@ func (t *VirtualTradingPlatform) Get(request *GetRequest, response *GetResponse)
 
 	var err error
 	var rec DBRecord
-	err, rec = t.GetDBRecord(request.TRADEID)
+	err, rec = GetDBRecord(t, request.TRADEID)
 
 	if err != nil {
 		return err
